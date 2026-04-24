@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IoT & Robotics — Complete Learning Resources</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --surface: #1e1e28;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8e8f0;
+    --muted: #8888a8;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --accent4: #ffa94d;
+    --yt: #ff4545;
+    --gh: #58a6ff;
+    --hi: #ff9f43;
+    --en: #54a0ff;
+    --both: #a29bfe;
+    --font: 'Space Grotesk', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108,99,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(0,212,170,0.3);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span.grad {
+    background: linear-gradient(135deg, #6c63ff, #00d4aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6c63ff, #00d4aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* ─── CONTROLS ─── */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .controls-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .pill-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .pill {
+    font-size: 12px;
+    font-family: var(--mono);
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .pill.yt.active   { background: var(--yt); border-color: var(--yt); }
+  .pill.gh.active   { background: var(--gh); border-color: var(--gh); }
+  .pill.yt:hover    { border-color: var(--yt); color: var(--yt); }
+  .pill.gh:hover    { border-color: var(--gh); color: var(--gh); }
+
+  .search-wrap { margin-left: auto; }
+
+  .search {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search:focus { border-color: var(--accent); }
+  .search::placeholder { color: var(--muted); }
+
+  /* ─── MAIN ─── */
+  .main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ─── DOMAIN CARD ─── */
+  .domain {
+    margin-bottom: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .domain:hover { border-color: var(--border2); }
+
+  .domain-header {
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .domain-header:hover { background: rgba(255,255,255,0.02); }
+
+  .domain-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 24px;
+  }
+
+  .domain-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .domain-meta { flex: 1; }
+
+  .domain-title {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .domain-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+    font-family: var(--mono);
+  }
+
+  .domain-counts {
+    display: flex; gap: 8px;
+  }
+
+  .count-badge {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid;
+  }
+
+  .count-badge.yt { border-color: rgba(255,69,69,0.4); color: var(--yt); background: rgba(255,69,69,0.08); }
+  .count-badge.gh { border-color: rgba(88,166,255,0.4); color: var(--gh); background: rgba(88,166,255,0.08); }
+
+  .chevron {
+    font-size: 12px;
+    color: var(--muted);
+    transition: transform 0.25s;
+    margin-left: 8px;
+  }
+
+  .domain.open .chevron { transform: rotate(90deg); }
+
+  .domain-body { display: none; border-top: 1px solid var(--border); }
+  .domain.open .domain-body { display: block; }
+
+  /* ─── TABS ─── */
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+  }
+
+  .tab {
+    padding: 0.7rem 1rem;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active-yt { color: var(--yt); border-bottom-color: var(--yt); }
+  .tab.active-gh { color: var(--gh); border-bottom-color: var(--gh); }
+
+  .tab-count {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--surface);
+  }
+
+  /* ─── CARD GRID ─── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.18s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+
+  .card.yt-card::before { background: linear-gradient(90deg, var(--yt), #ff8c42); }
+  .card.gh-card::before { background: linear-gradient(90deg, var(--gh), #79c0ff); }
+
+  .card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .card.yt-card:hover::before { opacity: 1; }
+  .card.gh-card:hover::before { opacity: 1; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .card-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .card-icon.yt { background: rgba(255,69,69,0.12); }
+  .card-icon.gh { background: rgba(88,166,255,0.12); }
+
+  .card-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .lang-badge {
+    font-size: 9px;
+    font-family: var(--mono);
+    padding: 2px 7px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .lang-hi { background: rgba(255,159,67,0.15); color: var(--hi); border: 1px solid rgba(255,159,67,0.3); }
+  .lang-en { background: rgba(84,160,255,0.15); color: var(--en); border: 1px solid rgba(84,160,255,0.3); }
+  .lang-both { background: rgba(162,155,254,0.15); color: var(--both); border: 1px solid rgba(162,155,254,0.3); }
+
+  .card-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: var(--surface);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .level-tag {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+
+  .lv-b { background: rgba(29,158,117,0.15); color: #1D9E75; border: 1px solid rgba(29,158,117,0.3); }
+  .lv-i { background: rgba(24,95,165,0.15); color: #54a0ff; border: 1px solid rgba(24,95,165,0.3); }
+  .lv-a { background: rgba(83,74,183,0.15); color: #a29bfe; border: 1px solid rgba(83,74,183,0.3); }
+  .lv-x { background: rgba(133,79,11,0.15); color: var(--accent4); border: 1px solid rgba(133,79,11,0.3); }
+
+  .stars {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: #ffd43b;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ─── HIDDEN ─── */
+  .hidden { display: none !important; }
+
+  /* ─── LEGEND ─── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .controls { padding: 0.8rem 1rem; gap: 8px; }
+    .search-wrap { width: 100%; }
+    .search { width: 100%; }
+    .domain-header { padding: 1rem; }
+    .card-grid { padding: 1rem; }
+  }
+
+  /* ─── LEVEL PATH ─── */
+  .level-path {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 1.5rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  .path-step {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .path-arrow { color: var(--muted); font-size: 10px; }
+
+  /* count indicator */
+  .no-results {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="badge">Open Learning Resource Map DESIGNED BY CHANDRIL GOSWAMI</div>
+  <h1>IoT <span class="grad">&amp; Robotics</span><br/>Complete Guide</h1>
+  <p>YouTube channels (Hindi &amp; English) + GitHub repositories for every topic — from beginner circuits to industry-level autonomous systems.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">Domains</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">YT Channels</div></div>
+    <div class="stat"><div class="stat-num">60+</div><div class="stat-label">GitHub Repos</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Skill Levels</div></div>
+  </div>
+</section>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <span class="controls-label">Filter:</span>
+  <div class="pill-group" id="type-filters">
+    <button class="pill active" data-type="all">All</button>
+    <button class="pill yt" data-type="yt">▶ YouTube</button>
+    <button class="pill gh" data-type="gh">⌥ GitHub</button>
+  </div>
+  <div class="pill-group" id="lang-filters">
+    <button class="pill" data-lang="all">All Lang</button>
+    <button class="pill" data-lang="hi">🇮🇳 Hindi</button>
+    <button class="pill" data-lang="en">🌐 English</button>
+    <button class="pill" data-lang="both">🇮🇳+🌐</button>
+  </div>
+  <div class="pill-group" id="level-filters">
+    <button class="pill" data-level="all">All Levels</button>
+    <button class="pill" data-level="lv-b">Beginner</button>
+    <button class="pill" data-level="lv-i">Intermediate</button>
+    <button class="pill" data-level="lv-a">Advanced</button>
+    <button class="pill" data-level="lv-x">Industry</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search" id="search" type="text" placeholder="Search channels, repos..."/>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main" id="main"></main>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Beginner</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#54a0ff"></div>Intermediate</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a29bfe"></div>Advanced</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffa94d"></div>Industry/Pro</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff9f43"></div>🇮🇳 Hindi</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#54a0ff"></div>🌐 English</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a29bfe"></div>Both</div>
+</div>
+
+<footer>Built for IoT &amp; Robotics learners · Resources from Beginner to Industry Level · Last updated 2025</footer>
+
+<script>
+const domains = [
+  {
+    num:"01", icon:"⚡", title:"Electronics & Hardware Fundamentals",
+    color:"#1D9E75", levels:["Beginner","Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Gyani Techno", lang:"hi", url:"https://www.youtube.com/@GYANITechno", level:"lv-b",
+        desc:"Ohm's Law, basic circuits, components explained in simple Hindi. Best for complete beginners.", tags:["Basic circuits","Components","Breadboarding","Power supply"] },
+      { name:"ElectroBoom", lang:"en", url:"https://www.youtube.com/@ElectroBOOM", level:"lv-b",
+        desc:"Entertaining deep dives into electronics theory, op-amps, EMI — builds real intuition fast.", tags:["Circuit theory","Op-amps","EMI","Power"] },
+      { name:"GreatScott!", lang:"en", url:"https://www.youtube.com/@greatscottlab", level:"lv-i",
+        desc:"Transistors, MOSFETs, power circuits, I2C/SPI — project-based learning from basics to intermediate.", tags:["MOSFETs","I2C/SPI","Power supplies","PCB"] },
+      { name:"Phil's Lab", lang:"en", url:"https://www.youtube.com/@PhilsLab", level:"lv-a",
+        desc:"Professional-grade PCB design, STM32, analog/mixed-signal circuits. Best advanced hardware channel.", tags:["PCB layout","STM32","ADC/DAC","Signal integrity"] },
+      { name:"Robo India", lang:"both", url:"https://www.youtube.com/@RoboIndia", level:"lv-b",
+        desc:"Arduino, sensors, electronics projects for beginners. Bilingual content with practical demos.", tags:["Arduino","Sensors","LEDs","Relays"] },
+    ],
+    github:[
+      { name:"Awesome Embedded Software", stars:"4.2k", url:"https://github.com/iDoka/awesome-embedded-software",
+        desc:"Curated list of software, libs, protocols for resource-constrained embedded systems (MCUs, IoT).", tags:["Embedded","RTOS","Protocols","IoT OS"] },
+      { name:"Awesome Embedded", stars:"3.1k", url:"https://github.com/nhivp/Awesome-Embedded",
+        desc:"Comprehensive list of embedded programming resources — STM32, ARM, FreeRTOS, bootloaders.", tags:["STM32","ARM","FreeRTOS","Bootloader"] },
+      { name:"KiCad EDA", stars:"3.8k", url:"https://github.com/KiCad/kicad-source-mirror",
+        desc:"Open-source PCB design suite — schematic editor, PCB layout, 3D viewer. Industry-grade tool.", tags:["PCB design","Schematic","KiCad","Open source"] },
+    ]
+  },
+  {
+    num:"02", icon:"🔧", title:"Microcontrollers & Embedded Systems",
+    color:"#185FA5", levels:["Beginner","Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Paul McWhorter", lang:"en", url:"https://www.youtube.com/@paulmcwhorter", level:"lv-b",
+        desc:"Best beginner Arduino & Raspberry Pi series. Step-by-step 100+ video course, extremely patient.", tags:["Arduino","Raspberry Pi","GPIO","Serial"] },
+      { name:"Embedded with Embedded", lang:"hi", url:"https://www.youtube.com/c/EmbeddedwithEmbedded", level:"lv-i",
+        desc:"Hindi embedded C, STM32, RTOS concepts explained step by step for Indian engineering students.", tags:["Embedded C","STM32","UART/SPI","RTOS"] },
+      { name:"Fastbit EBA", lang:"en", url:"https://www.youtube.com/@FastbitEBA", level:"lv-a",
+        desc:"Low-level STM32 register programming, DMA, bootloaders — for serious embedded engineers.", tags:["Register-level","DMA","Bootloader","STM32"] },
+      { name:"Controllers Tech", lang:"en", url:"https://www.youtube.com/@ControllersTeach", level:"lv-i",
+        desc:"STM32 HAL, CAN bus, USB, low power modes. Very practical and project-focused tutorials.", tags:["STM32 HAL","CAN bus","USB","Low power"] },
+      { name:"DigiKey / Shawn Hymel", lang:"en", url:"https://www.youtube.com/@digikey", level:"lv-i",
+        desc:"FreeRTOS, bare-metal ARM, professional embedded tutorials with industry-grade depth.", tags:["FreeRTOS","ARM Cortex","Bare-metal C","RTOS"] },
+    ],
+    github:[
+      { name:"FreeRTOS", stars:"5.2k", url:"https://github.com/FreeRTOS/FreeRTOS",
+        desc:"The official FreeRTOS kernel — industry-standard real-time OS for embedded microcontrollers.", tags:["RTOS","Kernel","Embedded","MCU"] },
+      { name:"Arduino", stars:"14k", url:"https://github.com/arduino/Arduino",
+        desc:"Official Arduino IDE and core libraries. The foundation for 90% of beginner embedded projects.", tags:["Arduino","IDE","C++","Beginner"] },
+      { name:"Zephyr RTOS", stars:"10k", url:"https://github.com/zephyrproject-rtos/zephyr",
+        desc:"A scalable real-time OS for resource-constrained devices — from MCUs to embedded Linux.", tags:["RTOS","Zephyr","IoT OS","Multi-arch"] },
+      { name:"STM32 HAL Examples", stars:"2.1k", url:"https://github.com/STMicroelectronics/STM32CubeF4",
+        desc:"Official STM32 Cube firmware examples — HAL drivers, BSP, middleware for STM32 series.", tags:["STM32","HAL","Firmware","ST"] },
+    ]
+  },
+  {
+    num:"03", icon:"📡", title:"Sensors & Actuators",
+    color:"#534AB7", levels:["Beginner","Intermediate","Advanced"],
+    youtube:[
+      { name:"CircuitDigest", lang:"both", url:"https://www.youtube.com/@CircuitDigest", level:"lv-b",
+        desc:"Covers almost every sensor module with wiring diagrams and code in Hindi & English.", tags:["DHT11/22","Ultrasonic","PIR","Servo motors"] },
+      { name:"DroneBot Workshop", lang:"en", url:"https://www.youtube.com/@dronebotworkshop", level:"lv-i",
+        desc:"Arduino/Raspberry Pi sensors, motor drivers, LIDAR, IMU — everything practical and well explained.", tags:["LIDAR","IMU","Motor drivers","Encoders"] },
+      { name:"Techiesms", lang:"hi", url:"https://www.youtube.com/@Techiesms", level:"lv-b",
+        desc:"Hindi IoT tutorials with ESP8266/ESP32, various sensors — DHT, MQ gas, soil moisture etc.", tags:["Gas sensors","ESP32","Soil sensor","Relay"] },
+      { name:"How To Mechatronics", lang:"en", url:"https://www.youtube.com/@HowToMechatronics", level:"lv-i",
+        desc:"Detailed sensor projects with stepper/servo motors, encoder feedback, and force sensors.", tags:["Stepper motors","Encoders","Servos","HC-SR04"] },
+    ],
+    github:[
+      { name:"DHT Sensor Library", stars:"1.5k", url:"https://github.com/adafruit/DHT-sensor-library",
+        desc:"Adafruit's DHT11/DHT22 temperature & humidity sensor library for Arduino — beginner favourite.", tags:["DHT11","DHT22","Arduino","Temperature"] },
+      { name:"MPU6050 IMU Library", stars:"2.3k", url:"https://github.com/jrowberg/i2cdevlib",
+        desc:"I2CdevLib with MPU-6050 DMP support — accelerometer, gyroscope, digital motion processing.", tags:["IMU","MPU6050","I2C","Sensor fusion"] },
+      { name:"Kalman Filter Library", stars:"1.9k", url:"https://github.com/rfetick/Kalman",
+        desc:"Lightweight Kalman filter implementation for sensor fusion on Arduino and embedded platforms.", tags:["Kalman","Sensor fusion","Arduino","Filter"] },
+      { name:"OpenCV", stars:"78k", url:"https://github.com/opencv/opencv",
+        desc:"The world's largest computer vision library — used for camera-based sensing in robotics & IoT.", tags:["Vision","Camera","Detection","Industry"] },
+    ]
+  },
+  {
+    num:"04", icon:"📶", title:"IoT Connectivity & Networking",
+    color:"#BA7517", levels:["Beginner","Intermediate","Industry"],
+    youtube:[
+      { name:"True Engineer", lang:"hi", url:"https://www.youtube.com/@TrueEngineer", level:"lv-b",
+        desc:"Hindi IoT from basics to advanced — WiFi, MQTT, LoRa, cloud platforms in long-form videos.", tags:["WiFi IoT","MQTT","LoRa","Cloud IoT"] },
+      { name:"RandomNerdTutorials", lang:"en", url:"https://www.youtube.com/@RandomNerdTutorials", level:"lv-i",
+        desc:"ESP32/ESP8266 WiFi, Bluetooth, MQTT, REST API — #1 resource for practical IoT connectivity.", tags:["ESP32 WiFi","MQTT","BLE","REST API"] },
+      { name:"Andreas Spiess", lang:"en", url:"https://www.youtube.com/@AndreasSpiess", level:"lv-i",
+        desc:"LoRaWAN, NB-IoT, ESP32, networking protocols — deep technical reviews with real hardware tests.", tags:["LoRaWAN","NB-IoT","Thread","5G IoT"] },
+      { name:"Network Chuck", lang:"en", url:"https://www.youtube.com/@NetworkChuck", level:"lv-i",
+        desc:"Networking fundamentals, VPNs, TCP/IP, protocols — essential background for IoT networking.", tags:["TCP/IP","VPN","Protocols","Network basics"] },
+      { name:"Techdhee", lang:"hi", url:"https://www.youtube.com/@techdhee", level:"lv-b",
+        desc:"Hindi tutorials covering ESP8266, NodeMCU, Blynk, WiFi home automation from scratch.", tags:["NodeMCU","Blynk","Home automation","WiFi"] },
+    ],
+    github:[
+      { name:"Eclipse Mosquitto (MQTT)", stars:"9.1k", url:"https://github.com/eclipse/mosquitto",
+        desc:"Lightweight open-source MQTT message broker — the backbone of most IoT communication systems.", tags:["MQTT","Broker","IoT protocol","Pub/Sub"] },
+      { name:"MQTT.js", stars:"8.4k", url:"https://github.com/mqttjs/MQTT.js",
+        desc:"JavaScript MQTT client for Node.js and browsers — perfect for IoT dashboards and services.", tags:["MQTT","Node.js","JavaScript","Browser"] },
+      { name:"ESPHome", stars:"7.8k", url:"https://github.com/esphome/esphome",
+        desc:"YAML-configured firmware for ESP32/ESP8266 — WiFi, MQTT, Home Assistant integration ready.", tags:["ESP32","WiFi","YAML","Home Assistant"] },
+      { name:"Awesome IoT", stars:"3.1k", url:"https://github.com/HQarroum/awesome-iot",
+        desc:"Curated list of IoT frameworks, libraries, OS platforms, protocols and tools.", tags:["IoT list","Frameworks","Platforms","Protocols"] },
+    ]
+  },
+  {
+    num:"05", icon:"☁️", title:"Cloud, Data & IoT Platforms",
+    color:"#0F6E56", levels:["Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Edureka", lang:"both", url:"https://www.youtube.com/@edurekaIN", level:"lv-i",
+        desc:"AWS IoT, Azure IoT Hub, Grafana, Node-RED explained in Hindi & English with full course playlists.", tags:["AWS IoT","Azure IoT","Grafana","Node-RED"] },
+      { name:"Simplilearn", lang:"both", url:"https://www.youtube.com/@SimplilearnOfficial", level:"lv-i",
+        desc:"AWS IoT Core, Azure Digital Twins, Kafka, InfluxDB courses in both languages.", tags:["AWS IoT Core","Digital twins","Kafka","InfluxDB"] },
+      { name:"Node-RED Official", lang:"en", url:"https://www.youtube.com/@NodeREDchannel", level:"lv-b",
+        desc:"Official Node-RED tutorials covering flows, MQTT dashboards, and cloud integrations.", tags:["Node-RED","MQTT","Dashboard","Flows"] },
+      { name:"Sentdex", lang:"en", url:"https://www.youtube.com/@sentdex", level:"lv-a",
+        desc:"Python for IoT data analysis, ML pipelines, time-series data — intermediate to advanced.", tags:["Python IoT","Data pipelines","ML for IoT","Time-series"] },
+    ],
+    github:[
+      { name:"Node-RED", stars:"19k", url:"https://github.com/node-red/node-red",
+        desc:"Low-code event-driven programming for IoT. Drag-drop flows connecting devices, APIs, services.", tags:["Node-RED","Low-code","MQTT","Flows"] },
+      { name:"Home Assistant", stars:"72k", url:"https://github.com/home-assistant/core",
+        desc:"Python-based open-source home automation platform — integrates 3000+ IoT devices and services.", tags:["Home automation","Python","IoT platform","Open source"] },
+      { name:"ThingsBoard", stars:"16k", url:"https://github.com/thingsboard/thingsboard",
+        desc:"Open-source IoT platform for data collection, processing, visualization and device management.", tags:["IoT platform","Dashboard","MQTT","OPC-UA"] },
+      { name:"InfluxDB", stars:"28k", url:"https://github.com/influxdata/influxdb",
+        desc:"Purpose-built time-series database for IoT metrics, monitoring and real-time analytics.", tags:["Time-series","Database","Metrics","Analytics"] },
+      { name:"Grafana", stars:"63k", url:"https://github.com/grafana/grafana",
+        desc:"Open-source observability platform for IoT dashboards with InfluxDB, Prometheus connectors.", tags:["Dashboard","Visualization","Grafana","Analytics"] },
+    ]
+  },
+  {
+    num:"06", icon:"🤖", title:"Robotics Fundamentals",
+    color:"#3C3489", levels:["Beginner","Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Articulated Robotics", lang:"en", url:"https://www.youtube.com/@ArticulatedRobotics", level:"lv-i",
+        desc:"Best ROS 2 channel — URDF, simulation, Nav2, manipulation, all from scratch. Must-watch.", tags:["ROS 2","URDF","Gazebo","Nav2"] },
+      { name:"The Construct", lang:"en", url:"https://www.youtube.com/@theconstructsim", level:"lv-i",
+        desc:"ROS/ROS2 tutorials, robot simulation, MoveIt!, path planning — comprehensive robotics programming.", tags:["ROS2","MoveIt!","Simulation","Path planning"] },
+      { name:"Robotic Systems Lab", lang:"en", url:"https://www.youtube.com/@leggedrobotics", level:"lv-a",
+        desc:"Advanced legged robotics research — dynamics, whole-body control, ANYmal quadruped robot.", tags:["Legged robots","Dynamics","Whole-body control","Research"] },
+      { name:"Robo India Hindi", lang:"hi", url:"https://www.youtube.com/@RoboIndia", level:"lv-b",
+        desc:"Hindi robotics basics — degrees of freedom, motors, kinematics fundamentals, robot builds.", tags:["Robot basics","DoF","Motors","Kinematics"] },
+      { name:"Engineers Academy", lang:"hi", url:"https://www.youtube.com/@EngineersAcademyOfficial", level:"lv-i",
+        desc:"PID control, control systems, servo control explained in Hindi for engineering students.", tags:["PID control","Control systems","Servos","Feedback"] },
+    ],
+    github:[
+      { name:"ROS 2 (Robot OS)", stars:"5k", url:"https://github.com/ros2/ros2",
+        desc:"Official ROS 2 meta-repository — the standard platform for professional robot development worldwide.", tags:["ROS2","Robotics","Middleware","Industry"] },
+      { name:"PythonRobotics", stars:"23k", url:"https://github.com/AtsushiSakai/PythonRobotics",
+        desc:"Python sample codes for robotics algorithms — path planning, SLAM, localization, control. Legendary repo.", tags:["Path planning","SLAM","Localization","Python"] },
+      { name:"Awesome Robotics", stars:"5.1k", url:"https://github.com/kiloreux/awesome-robotics",
+        desc:"Curated list of robotics resources — books, courses, simulators, middleware, software libraries.", tags:["Resources","Robotics","Libraries","Courses"] },
+      { name:"MoveIt!", stars:"1.2k", url:"https://github.com/moveit/moveit2",
+        desc:"Motion planning framework for robotic arms — IK, collision checking, trajectory execution.", tags:["Motion planning","Manipulation","MoveIt","IK"] },
+      { name:"Webots Simulator", stars:"2.9k", url:"https://github.com/cyberbotics/webots",
+        desc:"Open-source robot simulator — extensive robot library, ROS2 bridge, cross-platform.", tags:["Simulation","Webots","ROS2","Robot models"] },
+    ]
+  },
+  {
+    num:"07", icon:"🧠", title:"AI, ML & Computer Vision",
+    color:"#993C1D", levels:["Beginner","Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Campusx", lang:"hi", url:"https://www.youtube.com/@campusx-official", level:"lv-i",
+        desc:"Best Hindi ML/DL channel — TensorFlow, PyTorch, CNNs, object detection explained in depth.", tags:["TensorFlow","CNN","Object detection","Deep learning"] },
+      { name:"Krish Naik", lang:"both", url:"https://www.youtube.com/@krishnaik06", level:"lv-i",
+        desc:"ML fundamentals, deep learning, transfer learning explained in Hindi & English. 1M+ subs.", tags:["ML basics","Transfer learning","Neural nets","Python ML"] },
+      { name:"Nicholas Renotte", lang:"en", url:"https://www.youtube.com/@NicholasRenotte", level:"lv-i",
+        desc:"OpenCV, YOLO, pose estimation, object detection — practical computer vision projects.", tags:["YOLO","OpenCV","Pose estimation","Detection"] },
+      { name:"Edge Impulse", lang:"en", url:"https://www.youtube.com/@EdgeImpulse", level:"lv-b",
+        desc:"TinyML on embedded devices — image classification, anomaly detection on Arduino, Raspberry Pi.", tags:["TinyML","Embedded ML","Arduino","Edge AI"] },
+      { name:"Murtaza Workshop", lang:"en", url:"https://www.youtube.com/@murtazahassan", level:"lv-i",
+        desc:"OpenCV & computer vision projects — face detection, hand tracking, AR, robotics vision.", tags:["OpenCV","Hand tracking","Face detection","Vision robots"] },
+      { name:"3Blue1Brown", lang:"en", url:"https://www.youtube.com/@3blue1brown", level:"lv-a",
+        desc:"Visual intuition for neural networks, calculus, linear algebra — builds deep mathematical understanding.", tags:["Neural net intuition","Backprop","Math for ML","Attention"] },
+    ],
+    github:[
+      { name:"TensorFlow", stars:"184k", url:"https://github.com/tensorflow/tensorflow",
+        desc:"Google's end-to-end ML platform — TFLite supports on-device inference for IoT/robotics.", tags:["TensorFlow","TFLite","ML","Edge AI"] },
+      { name:"Ultralytics YOLOv8", stars:"28k", url:"https://github.com/ultralytics/ultralytics",
+        desc:"State-of-art real-time object detection — runs on Raspberry Pi, Jetson, industrial cameras.", tags:["YOLO","Object detection","Real-time","Edge"] },
+      { name:"Edge Impulse SDK", stars:"2.1k", url:"https://github.com/edgeimpulse/inferencing-sdk-cpp",
+        desc:"Run ML models on microcontrollers — C++ SDK for deploying TinyML to any embedded device.", tags:["TinyML","MCU","Embedded ML","SDK"] },
+      { name:"OpenCV", stars:"78k", url:"https://github.com/opencv/opencv",
+        desc:"The foundational computer vision library — used in robotics, drones, industrial inspection.", tags:["Computer vision","C++","Python","Industry"] },
+      { name:"LeRobot (HuggingFace)", stars:"9k", url:"https://github.com/huggingface/lerobot",
+        desc:"Pretrained models, datasets, environments for real-world robotics in PyTorch — latest 2024 framework.", tags:["Robot learning","PyTorch","HuggingFace","Manipulation"] },
+    ]
+  },
+  {
+    num:"08", icon:"🏭", title:"Industrial IoT & Automation",
+    color:"#854F0B", levels:["Beginner","Intermediate","Industry"],
+    youtube:[
+      { name:"RealPars", lang:"en", url:"https://www.youtube.com/@realpars", level:"lv-b",
+        desc:"Best SCADA, PLC, ladder logic channel. Siemens, Allen-Bradley, OPC-UA from scratch. Industry gold.", tags:["PLC","Ladder logic","SCADA","OPC-UA"] },
+      { name:"AUTOMATION TALKS Hindi", lang:"hi", url:"https://www.youtube.com/@AutomationTalksHindi", level:"lv-b",
+        desc:"Hindi PLC programming, industrial automation, SCADA basics for Indian automation engineers.", tags:["PLC Hindi","Automation","Modbus","SCADA Hindi"] },
+      { name:"PLC Programming Channel", lang:"en", url:"https://www.youtube.com/@PLCprogramming", level:"lv-i",
+        desc:"IEC 61131-3 programming, Modbus, PROFINET, DCS — structured industrial automation training.", tags:["IEC 61131","Modbus","PROFINET","DCS"] },
+      { name:"Siemens Industry", lang:"en", url:"https://www.youtube.com/@SiemensIndustry", level:"lv-x",
+        desc:"Official Siemens — TIA Portal, S7-1500, MindSphere, Digital Twin industrial use cases.", tags:["TIA Portal","S7-1500","MindSphere","Digital twin"] },
+    ],
+    github:[
+      { name:"OpenPLC Runtime", stars:"1.8k", url:"https://github.com/thiagoralves/OpenPLC_Runtime",
+        desc:"Open-source PLC runtime implementing IEC 61131-3 languages — ladder, ST, FBD on Raspberry Pi.", tags:["PLC","IEC 61131","Open-source","Ladder logic"] },
+      { name:"node-opcua", stars:"1.4k", url:"https://github.com/node-opcua/node-opcua",
+        desc:"Full OPC-UA client/server implementation in Node.js — connect industrial devices to cloud systems.", tags:["OPC-UA","Industrial","Node.js","IIoT"] },
+      { name:"Awesome IIoT", stars:"1.2k", url:"https://github.com/realeroberto/awesome-iiot",
+        desc:"Curated list of Industrial IoT resources — platforms, protocols, tools, frameworks for Industry 4.0.", tags:["IIoT","Industry 4.0","Protocols","Resources"] },
+      { name:"pymodbus", stars:"2.3k", url:"https://github.com/pymodbus-dev/pymodbus",
+        desc:"Full Modbus protocol implementation in Python — RTU, TCP, ASCII. Essential for PLC communication.", tags:["Modbus","Python","PLC comm","Industrial"] },
+    ]
+  },
+  {
+    num:"09", icon:"🔒", title:"Cybersecurity for IoT & OT",
+    color:"#26215C", levels:["Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Professor Messer", lang:"en", url:"https://www.youtube.com/@professormesser", level:"lv-b",
+        desc:"Network security, PKI, TLS, threat models — foundational security concepts clearly explained.", tags:["PKI","TLS","Threat models","Network security"] },
+      { name:"Hak5", lang:"en", url:"https://www.youtube.com/@hak5", level:"lv-i",
+        desc:"Penetration testing, IoT device security, hardware hacking, vulnerability assessment techniques.", tags:["IoT hacking","Pen testing","Hardware security","Vuln scan"] },
+      { name:"Network Chuck", lang:"en", url:"https://www.youtube.com/@NetworkChuck", level:"lv-i",
+        desc:"Zero-trust, VPN, firewalls, network segmentation — important for IoT secure deployments.", tags:["Zero trust","Firewalls","Network segments","VPN"] },
+    ],
+    github:[
+      { name:"Awesome IoT Security", stars:"1.1k", url:"https://github.com/V33RU/IoTSecurity101",
+        desc:"Curated IoT security resources — attack surfaces, tools, CTFs, courses for IoT pen testing.", tags:["IoT security","Pen testing","CVE","Firmware analysis"] },
+      { name:"Firmwalker", stars:"1.6k", url:"https://github.com/craigz28/firmwalker",
+        desc:"Script to search extracted firmware for common security vulnerabilities and sensitive data.", tags:["Firmware","Security","Analysis","Script"] },
+      { name:"OpenSSL", stars:"25k", url:"https://github.com/openssl/openssl",
+        desc:"The standard TLS/SSL library used for securing IoT device communication over the internet.", tags:["TLS","SSL","PKI","Encryption"] },
+      { name:"Wireshark", stars:"6.9k", url:"https://github.com/wireshark/wireshark",
+        desc:"Network protocol analyzer — capture and inspect IoT traffic for debugging and security auditing.", tags:["Network","Packet capture","Protocol","Debugging"] },
+    ]
+  },
+  {
+    num:"10", icon:"🚁", title:"Autonomous Systems, Drones & AMR",
+    color:"#3B6D11", levels:["Intermediate","Advanced","Industry"],
+    youtube:[
+      { name:"Intelligent Quads", lang:"en", url:"https://www.youtube.com/@IntelligentQuads", level:"lv-i",
+        desc:"Drone autonomy with PX4 & ArduPilot, ROS integration, SLAM on drones, computer vision.", tags:["PX4","ArduPilot","Drone SLAM","Autonomous UAV"] },
+      { name:"Boston Dynamics", lang:"en", url:"https://www.youtube.com/@BostonDynamics", level:"lv-a",
+        desc:"State-of-art legged robot demos — Atlas, Spot, Stretch. Shows the frontier of industry robotics.", tags:["Legged robots","AMR","Atlas","Spot robot"] },
+      { name:"UZH Robotics Lab", lang:"en", url:"https://www.youtube.com/@roboticsandperceptiongroup", level:"lv-a",
+        desc:"Research-level autonomous drones, visual odometry, agile flight — cutting edge academic content.", tags:["Visual odometry","Agile drones","3D perception","Research"] },
+      { name:"The Robot Brains", lang:"en", url:"https://www.youtube.com/@therobotbrains", level:"lv-a",
+        desc:"Interviews with top roboticists — AMR, manipulation, autonomy — great for industry insight.", tags:["AMR","Manipulation","Autonomy","Industry robotics"] },
+    ],
+    github:[
+      { name:"PX4 Autopilot", stars:"7.8k", url:"https://github.com/PX4/PX4-Autopilot",
+        desc:"Open-source flight control software for drones and unmanned vehicles — industry standard.", tags:["Drones","PX4","Flight control","Autonomous"] },
+      { name:"ArduPilot", stars:"10k", url:"https://github.com/ArduPilot/ardupilot",
+        desc:"Trusted open-source autopilot for multirotors, planes, rovers, boats — used worldwide.", tags:["ArduPilot","Autopilot","UAV","Rover"] },
+      { name:"ROS 2 Navigation (Nav2)", stars:"2.1k", url:"https://github.com/ros-navigation/navigation2",
+        desc:"ROS 2 navigation stack for autonomous mobile robots — path planning, costmaps, obstacle avoidance.", tags:["Nav2","AMR","Path planning","ROS2"] },
+      { name:"Awesome Robotics Projects", stars:"1.8k", url:"https://github.com/mjyc/awesome-robotics-projects",
+        desc:"List of open-source, affordable, visionary robotics projects — AMR, arms, drones, humanoids.", tags:["Open-source robots","AMR","Drones","Humanoids"] },
+      { name:"AirSim", stars:"15k", url:"https://github.com/microsoft/AirSim",
+        desc:"Microsoft's simulation environment for drones and cars using Unreal Engine — lifelike sensors.", tags:["Drone simulation","AirSim","Unreal Engine","Testing"] },
+    ]
+  }
+];
+
+let activeType = 'all';
+let activeLang = 'all';
+let activeLevel = 'all';
+let searchQuery = '';
+
+function render() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  let totalVisible = 0;
+
+  domains.forEach((d, di) => {
+    const ytCards = d.youtube.filter(c => matchCard(c, 'yt'));
+    const ghCards = d.github.filter(c => matchRepo(c));
+    if (ytCards.length === 0 && ghCards.length === 0) return;
+    totalVisible++;
+
+    const div = document.createElement('div');
+    div.className = 'domain' + (di === 0 ? ' open' : '');
+
+    div.innerHTML = `
+      <div class="domain-header" onclick="this.closest('.domain').classList.toggle('open')">
+        <span class="domain-num">${d.num}</span>
+        <div class="domain-icon" style="background:${d.color}20; color:${d.color}">${d.icon}</div>
+        <div class="domain-meta">
+          <div class="domain-title" style="color:${d.color}">${d.title}</div>
+          <div class="domain-sub">${d.levels.join(' → ')}</div>
+        </div>
+        <div class="domain-counts">
+          ${ytCards.length ? `<span class="count-badge yt">▶ ${ytCards.length} channels</span>` : ''}
+          ${ghCards.length ? `<span class="count-badge gh">⌥ ${ghCards.length} repos</span>` : ''}
+        </div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="domain-body">
+        ${buildBody(d, ytCards, ghCards)}
+      </div>`;
+    main.appendChild(div);
+  });
+
+  if (totalVisible === 0) {
+    main.innerHTML = '<div class="no-results">No results found. Try adjusting your filters or search query.</div>';
+  }
+}
+
+function buildBody(d, ytCards, ghCards) {
+  let html = '';
+  const showYT = (activeType === 'all' || activeType === 'yt') && ytCards.length > 0;
+  const showGH = (activeType === 'all' || activeType === 'gh') && ghCards.length > 0;
+
+  if (showYT) {
+    html += `<div style="padding:1rem 1.5rem 0.3rem;"><span style="font-size:11px;font-family:var(--mono);color:var(--yt);text-transform:uppercase;letter-spacing:0.08em;">▶ YouTube Channels</span></div>`;
+    html += `<div class="card-grid">${ytCards.map(c => buildYTCard(c)).join('')}</div>`;
+  }
+  if (showGH) {
+    html += `<div style="padding:1rem 1.5rem 0.3rem; border-top:${showYT ? '1px solid var(--border)' : 'none'};margin-top:${showYT ? '0.5rem' : '0'}"><span style="font-size:11px;font-family:var(--mono);color:var(--gh);text-transform:uppercase;letter-spacing:0.08em;">⌥ GitHub Repositories</span></div>`;
+    html += `<div class="card-grid">${ghCards.map(c => buildGHCard(c)).join('')}</div>`;
+  }
+  return html;
+}
+
+function buildYTCard(c) {
+  const langLabel = { hi:'🇮🇳 Hindi', en:'🌐 English', both:'🇮🇳+🌐 Both' };
+  const levelLabel = { 'lv-b':'Beginner', 'lv-i':'Intermediate', 'lv-a':'Advanced', 'lv-x':'Industry' };
+  return `<a class="card yt-card" href="${c.url}" target="_blank" rel="noopener">
+    <div class="card-top">
+      <div class="card-icon yt">▶</div>
+      <div class="card-name">${c.name}</div>
+      <span class="lang-badge lang-${c.lang}">${langLabel[c.lang]}</span>
+    </div>
+    <div class="card-desc">${c.desc}</div>
+    <div class="card-tags">
+      <span class="level-tag ${c.level}">${levelLabel[c.level]}</span>
+      ${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+    </div>
+  </a>`;
+}
+
+function buildGHCard(c) {
+  return `<a class="card gh-card" href="${c.url}" target="_blank" rel="noopener">
+    <div class="card-top">
+      <div class="card-icon gh">⌥</div>
+      <div class="card-name">${c.name}</div>
+      <span class="stars">★ ${c.stars}</span>
+    </div>
+    <div class="card-desc">${c.desc}</div>
+    <div class="card-tags">
+      ${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+    </div>
+  </a>`;
+}
+
+function matchCard(c, type) {
+  if (type === 'yt') {
+    if (activeLang !== 'all') {
+      if (activeLang === 'hi' && c.lang !== 'hi' && c.lang !== 'both') return false;
+      if (activeLang === 'en' && c.lang !== 'en' && c.lang !== 'both') return false;
+      if (activeLang === 'both' && c.lang !== 'both') return false;
+    }
+    if (activeLevel !== 'all' && c.level !== activeLevel) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (!c.name.toLowerCase().includes(q) && !c.desc.toLowerCase().includes(q) && !c.tags.some(t=>t.toLowerCase().includes(q))) return false;
+    }
+  }
+  return true;
+}
+
+function matchRepo(c) {
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    if (!c.name.toLowerCase().includes(q) && !c.desc.toLowerCase().includes(q) && !c.tags.some(t=>t.toLowerCase().includes(q))) return false;
+  }
+  return true;
+}
+
+// Type filters
+document.querySelectorAll('[data-type]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-type]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeType = btn.dataset.type;
+    render();
+  });
+});
+
+// Lang filters
+document.querySelectorAll('[data-lang]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-lang]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLang = btn.dataset.lang;
+    render();
+  });
+});
+
+// Level filters
+document.querySelectorAll('[data-level]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-level]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLevel = btn.dataset.level;
+    render();
+  });
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  render();
+});
+
+// Initial render
+render();
+</script>
+</body>
+</html>
